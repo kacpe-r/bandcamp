@@ -4,7 +4,7 @@ Application returns recently sold items from https://bandcamp.com which have bee
 
 List is being updated automatically every 10 seconds.
 
-![screenshot](screenshot.png 400x)
+![screenshot](screenshot.png)
 
 # How To
 ```cd bandcamp

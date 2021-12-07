@@ -1,0 +1,59 @@
+.grid-container {
+    display: grid;
+    grid-template-columns: 0fr 2fr;
+    float: left;
+    height: 250px;
+    &:hover {
+        background-image: linear-gradient(
+            rgba(255, 255, 255, 0.4) 10%,
+            rgba(255, 255, 255, 1) 100%
+        )
+    }
+
+    .image {
+        padding-top: 50px;
+        padding-left: 10px;
+        cursor: pointer;
+        width: 170px;
+    }
+    .text-section {
+        position: relative;
+        .row {
+            width: 350px;
+            margin: 10px;
+
+            .label {
+                margin-right: 5px;
+            }
+
+            .label:after {
+                content: ':';
+            }
+
+            .value {
+                text-overflow: ellipsis;
+            }
+
+            .value:not(:last-child):after{
+                content: " ";
+            }
+        }
+
+        .clickable {
+            cursor: pointer;
+        }
+
+        .tags {
+            position: absolute;
+            bottom: 0;
+            a {
+                background-color: black;
+                color: white;
+                &:hover {
+                    background-color: white;
+                    color: black;
+                }
+            }
+        }
+    }
+}

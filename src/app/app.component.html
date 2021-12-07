@@ -1,0 +1,32 @@
+<script type="module" src="app.js"></script>
+<div>
+    All elements: {{allElementsCounter}}
+</div>
+<div #elReference *ngFor="let item of items">
+    <div class="grid-container" id="{{item.utcDate}}">
+        <div class="image" (click)="goToUrl(item.url)">
+            <img [src]="item.artUrl">
+        </div>
+        <div class="text-section">
+            <div (click)="goToUrl(item.url)">
+                <div class="row clickable">
+                    <span class="label">Artist name</span>
+                    <span class="value">{{item.artistName}}</span>
+                </div>
+                <div class="row clickable" *ngIf="item.albumTitle">
+                    <span class="label">Album title</span>
+                    <span class="value">{{item.albumTitle}}</span>
+                </div>
+                <div class="row clickable">
+                    <span class="label">Item description</span>
+                    <span class="value">{{item.itemDescription}}</span>
+                </div>
+            </div>
+            <div class="row tags" *ngIf="item.tags">
+                <span *ngFor="let tag of item.tags" class="value">
+                    <a target="_blank" [href]="tag.tag_url">#{{tag.tag_name}}</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

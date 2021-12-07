@@ -10,4 +10,5 @@ List is being updated automatically every 10 seconds.
 ```cd bandcamp
 npm install
 npm run start
-open http://localhost:4200/```
+open http://localhost:4200/
+```

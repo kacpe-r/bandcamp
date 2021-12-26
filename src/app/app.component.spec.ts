@@ -1,31 +1,35 @@
-import { TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
 
-describe('AppComponent', () => {
-  beforeEach(async(() => {
+describe('AppComponent', async () => {
+  let component: AppComponent;
+  let fixture: ComponentFixture<AppComponent>;
+
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [
         AppComponent
       ],
+      imports: [
+        HttpClientTestingModule
+      ]
     }).compileComponents();
+    fixture = TestBed.createComponent(AppComponent);
+
+    component = fixture.componentInstance;
   }));
 
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
+    expect(component).toBeTruthy();
   });
 
-  it(`should have as title 'rx'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('rx');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
+  it(`should return counter`, () => {
+    component.allElementsCounter = 5;
     fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('rx app is running!');
+    const div: DebugElement = fixture.debugElement.query(By.css('div#counter'));
+    expect(div.nativeElement.innerText).toEqual('All elements: 5')
   });
 });

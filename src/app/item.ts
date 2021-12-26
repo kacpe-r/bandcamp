@@ -1,3 +1,5 @@
+import { IItem, ITag } from './item.interface';
+
 export class Item implements IItem {
     url: string;
     artistName: any;

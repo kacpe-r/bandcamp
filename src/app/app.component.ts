@@ -1,9 +1,11 @@
 import { Observable, interval, from } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { concatMap, flatMap, map, retryWhen, delay, take } from 'rxjs/operators';
+import { concatMap, mergeMap, map, retryWhen, delay, take } from 'rxjs/operators';
 import { Component, ElementRef, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { Item } from './item';
 import ColorThief from 'colorthief';
+import { IItem, IItemDirty, ITag } from './item.interface';
+import { IGetData, IResponse } from './api.interface';
 
 @Component({
   selector: 'app-root',
@@ -54,7 +56,7 @@ export class AppComponent implements OnInit {
 
     interval(10000)
       .pipe(
-        flatMap(() => parsedData$)
+        mergeMap(() => parsedData$)
       ).subscribe();
   }
 

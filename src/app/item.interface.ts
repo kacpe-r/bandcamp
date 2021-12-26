@@ -1,4 +1,4 @@
-interface IItemDirty {
+export interface IItemDirty {
     album_title: string;
     amount_paid: number;
     amount_paid_fmt: string;
@@ -20,7 +20,7 @@ interface IItemDirty {
     utc_date: number;
 }
 
-interface IItem {
+export interface IItem {
     url: string;
     artistName: string;
     albumTitle: string;
@@ -29,7 +29,7 @@ interface IItem {
     tags?: ITag[];
 }
 
-interface ITag {
+export interface ITag {
     tag_name: string;
     tag_url: string;
 }

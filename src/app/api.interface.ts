@@ -1,10 +1,12 @@
-interface IResponse {
+import { IItemDirty } from './item.interface';
+
+export interface IResponse {
     event_type: string;
     items: IItemDirty[];
     utc_date: number;
 }
 
-interface IGetData {
+export interface IGetData {
     feed_data: {
         data_delay_sec: number;
         end_date: number;

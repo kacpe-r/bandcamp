@@ -1,11 +1,11 @@
 import { Observable, interval, from } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { concatMap, mergeMap, map, retryWhen, delay, take } from 'rxjs/operators';
+import { concatMap, mergeMap, map } from 'rxjs/operators';
 import { Component, ElementRef, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { Item } from './item';
 import ColorThief from 'colorthief';
 import { IItem, IItemDirty, ITag } from './item.interface';
-import { IGetData, IResponse } from './api.interface';
+import { IResponse } from './api.interface';
+import { AppService } from './app.service';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +13,7 @@ import { IGetData, IResponse } from './api.interface';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  constructor(private http: HttpClient) { }
+  constructor(private service: AppService) { }
 
   public items: IItem[] = [];
   public allElementsCounter: number;
@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
   @ViewChildren('elReference') elReference: QueryList<ElementRef>;
 
   ngOnInit() {
-    const data$: Observable<IResponse[]> = this.getData();
+    const data$: Observable<IResponse[]> = this.service.getData();
     const parsedData$: Observable<void> = data$.pipe(
       concatMap(data => from(data)),
       map((response: IResponse) => {
@@ -40,7 +40,7 @@ export class AppComponent implements OnInit {
 
               this.setColors(singleItem, itemDirty);
 
-              this.tags$ = this.getTags(itemUrl);
+              this.tags$ = this.service.getTags(itemUrl);
               this.tags$.subscribe((tags) => {
                 singleItem.tags = tags;
               });
@@ -66,32 +66,6 @@ export class AppComponent implements OnInit {
 
   changeToDec(price: number): number {
     return Number(price.toFixed(2));
-  }
-
-  getData(): Observable<IResponse[]> {
-    const url = 'https://bandcamp.com/api/salesfeed/1/get_initial';
-    return this.http.get(url).pipe(map((response: IGetData) => {
-      return response.feed_data.events;
-    }));
-  }
-
-  getTags(url: string): Observable<ITag[]> {
-    return this.http.get(url, {responseType: 'text'}).pipe(
-      take(1),
-      map(html => {
-        return [...html.matchAll(/\a class\=\"tag\" href\=\"(.*)\".*\n.*>(.*)</g)].map((tag) => {
-          return {
-            tag_url: tag[1],
-            tag_name: tag[2]
-          };
-        });
-      }),
-      retryWhen(errors =>
-        errors.pipe(
-          delay(5000)
-        )
-      )
-    );
   }
 
   goToUrl(url: string): Window {

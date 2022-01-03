@@ -16,4 +16,4 @@ jobs:
       - name: 'Qodana Scan'
         uses: JetBrains/qodana-action@v4.1.0
         with:
-          linter: jetbrains/qodana-jvm
+          linter: jetbrains/qodana-js
